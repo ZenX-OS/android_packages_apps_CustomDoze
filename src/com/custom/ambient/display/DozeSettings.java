@@ -168,7 +168,6 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
                 boolean value = (Boolean) newValue;
                 mAoDPreference.setChecked(value);
                 Utils.enableAoD(value, mContext);
-                setPrefs();
                 return true;
             } else if (Utils.AMBIENT_DISPLAY_KEY.equals(key)) {
                 boolean value = (Boolean) newValue;
@@ -208,6 +207,7 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
                         Settings.System.DOZE_BRIGHTNESS, value);
                 return true;
             }
+            setPrefs();
             return false;
         }
 

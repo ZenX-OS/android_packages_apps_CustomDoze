@@ -221,42 +221,49 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
                 boolean value = (Boolean) newValue;
                 mPickUpPreference.setChecked(value);
                 Utils.enablePickUp(value, mContext);
+                setPrefs();
                 return true;
             } else if (Utils.GESTURE_RAISE_TO_WAKE_KEY.equals(key)) {
                 boolean value = (Boolean) newValue;
                 mRaiseToWakePreference.setChecked(value);
                 Utils.enableRaiseToWake(value, mContext);
+                setPrefs();
                 return true;
             } else if (Utils.PROXIMITY_SCREEN_WAKE_KEY.equals(key)) {
                 boolean value = (Boolean) newValue;
                 mProximityScreenWakePreference.setChecked(value);
                 Utils.enableProximityScreenWake(value, mContext);
+                setPrefs();
                 return true;
             } else if (Utils.GESTURE_HAND_WAVE_KEY.equals(key)) {
                 boolean value = (Boolean) newValue;
                 mHandwavePreference.setChecked(value);
                 Utils.enableHandWave(value, mContext);
+                setPrefs();
                 return true;
             } else if (Utils.GESTURE_POCKET_KEY.equals(key)) {
                 boolean value = (Boolean) newValue;
                 mPocketPreference.setChecked(value);
                 Utils.enablePocketMode(value, mContext);
+                setPrefs();
                 return true;
             } else if (Utils.SMART_WAKE_KEY.equals(key)) {
                 boolean value = (Boolean) newValue;
                 mSmartWakePreference.setChecked(value);
                 Utils.enableSmartWake(value, mContext);
+                setPrefs();
                 return true;
             } else if (Utils.DOUBLE_TAP_KEY.equals(key)) {
                 if (!Utils.isTapToWakeEnabled(mContext)); {
                     Settings.Secure.putInt(mContext.getContentResolver(),
                             Settings.Secure.DOUBLE_TAP_TO_WAKE, 1);
+                    setPrefs();
                 }
                 return true;
             } else if (preference == mPulseBrightness) {
-                int value = (Integer) newValue;
+                int v = (Integer) newValue;
                 Settings.System.putInt(mContext.getContentResolver(),
-                        Settings.System.PULSE_BRIGHTNESS, value);
+                        Settings.System.PULSE_BRIGHTNESS, v);
                 return true;
             } else if (preference == mDozeBrightness) {
                 int value = (Integer) newValue;

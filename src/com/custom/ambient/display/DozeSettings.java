@@ -28,7 +28,8 @@ import androidx.preference.SwitchPreference;
 import androidx.preference.PreferenceFragment;
 import android.view.MenuItem;
 
-import com.msm.xtended.preferences.SystemSettingSwitchPreference;
+import com.zenx.support.preferences.SystemSettingSeekBarPreference;
+import com.zenx.support.preferences.SystemSettingSwitchPreference;
 
 public class DozeSettings extends PreferenceActivity implements PreferenceFragment.OnPreferenceStartFragmentCallback {
 
@@ -83,6 +84,8 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
         private SwitchPreference mPocketPreference;
         private SystemSettingSwitchPreference mDozeOnChargePreference;
         private SystemSettingSwitchPreference mDoubleTapPreference;
+        private SystemSettingSeekBarPreference mDozeBrightness;
+        private SystemSettingSeekBarPreference mPulseBrightness;
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -155,6 +158,26 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
             mSmartWakePreference.setChecked(Utils.isSmartWakeEnabled(mContext));
             mSmartWakePreference.setOnPreferenceChangeListener(this);
 
+            int defaultDoze = getResources().getInteger(
+                    com.android.internal.R.integer.config_screenBrightnessDoze);
+            int defaultPulse = getResources().getInteger(
+                    com.android.internal.R.integer.config_screenBrightnessPulse);
+            if (defaultPulse == -1) {
+                defaultPulse = defaultDoze;
+            }
+
+            mPulseBrightness = (SystemSettingSeekBarPreference) findPreference(Utils.PULSE_BRIGHTNESS_KEY);
+            int value = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.PULSE_BRIGHTNESS, defaultPulse);
+            mPulseBrightness.setValue(value);
+            mPulseBrightness.setOnPreferenceChangeListener(this);
+
+            mDozeBrightness = (SystemSettingSeekBarPreference) findPreference(Utils.DOZE_BRIGHTNESS_KEY);
+            value = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.DOZE_BRIGHTNESS, defaultDoze);
+            mDozeBrightness.setValue(value);
+            mDozeBrightness.setOnPreferenceChangeListener(this);
+
             mTiltCategory = (PreferenceCategory) findPreference(KEY_CATEGORY_TILT_SENSOR);
             if (!getResources().getBoolean(R.bool.has_tilt_sensor)) {
                 getPreferenceScreen().removePreference(mTiltCategory);
@@ -182,38 +205,45 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             final String key = preference.getKey();
-            final boolean value = (Boolean) newValue;
 
             if (Utils.AOD_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
                 mAoDPreference.setChecked(value);
                 Utils.enableAoD(value, mContext);
                 setPrefs();
                 return true;
             } else if (Utils.AMBIENT_DISPLAY_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
                 mAmbientDisplayPreference.setChecked(value);
                 Utils.enableDoze(value, mContext);
                 return true;
             } else if (Utils.PICK_UP_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
                 mPickUpPreference.setChecked(value);
                 Utils.enablePickUp(value, mContext);
                 return true;
             } else if (Utils.GESTURE_RAISE_TO_WAKE_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
                 mRaiseToWakePreference.setChecked(value);
                 Utils.enableRaiseToWake(value, mContext);
                 return true;
             } else if (Utils.PROXIMITY_SCREEN_WAKE_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
                 mProximityScreenWakePreference.setChecked(value);
                 Utils.enableProximityScreenWake(value, mContext);
                 return true;
             } else if (Utils.GESTURE_HAND_WAVE_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
                 mHandwavePreference.setChecked(value);
                 Utils.enableHandWave(value, mContext);
                 return true;
             } else if (Utils.GESTURE_POCKET_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
                 mPocketPreference.setChecked(value);
                 Utils.enablePocketMode(value, mContext);
                 return true;
             } else if (Utils.SMART_WAKE_KEY.equals(key)) {
+                boolean value = (Boolean) newValue;
                 mSmartWakePreference.setChecked(value);
                 Utils.enableSmartWake(value, mContext);
                 return true;
@@ -222,6 +252,16 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
                     Settings.Secure.putInt(mContext.getContentResolver(),
                             Settings.Secure.DOUBLE_TAP_TO_WAKE, 1);
                 }
+                return true;
+            } else if (preference == mPulseBrightness) {
+                int value = (Integer) newValue;
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.PULSE_BRIGHTNESS, value);
+                return true;
+            } else if (preference == mDozeBrightness) {
+                int value = (Integer) newValue;
+                Settings.System.putInt(mContext.getContentResolver(),
+                        Settings.System.DOZE_BRIGHTNESS, value);
                 return true;
             }
             return false;
@@ -238,6 +278,8 @@ public class DozeSettings extends PreferenceActivity implements PreferenceFragme
             mPocketPreference.setEnabled(!aodEnabled);
             mDozeOnChargePreference.setEnabled(!aodEnabled);
             mDoubleTapPreference.setEnabled(!aodEnabled);
+            mDozeBrightness.setEnabled(aodEnabled);
+            mPulseBrightness.setEnabled(!aodEnabled);
         }
 
         @Override

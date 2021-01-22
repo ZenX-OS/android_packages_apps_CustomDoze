@@ -60,4 +60,7 @@
         hardware specifications, so don\'t consider above values as absolute ones.\n\nLong press on
         the left text value to set it manually.</string>
 
+    <string name="brightness_title">Brightness</string>
+    <string name="ambient_pulse_brightness_title">Ambient display</string>
+    <string name="ambient_doze_brightness_title">Always on display</string>
 </resources>

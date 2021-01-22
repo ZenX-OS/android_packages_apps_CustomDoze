@@ -14,7 +14,9 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:settings="http://schemas.android.com/apk/res-auto">
 
     <Preference
         android:key="doze_animation"
@@ -29,7 +31,7 @@
             android:title="@string/aod_setting_title"
             android:summary="@string/aod_setting_summary" />
 
-        <com.msm.xtended.preferences.SystemSettingSwitchPreference
+        <com.zenx.support.preferences.SystemSettingSwitchPreference
             android:key="doze_on_charge"
             android:defaultValue="false"
             android:title="@string/doze_on_charge_title"
@@ -41,7 +43,7 @@
             android:title="@string/ambient_display_notifications"
             android:summary="@string/ambient_display_summary" />
 
-        <com.msm.xtended.preferences.SystemSettingSwitchPreference
+        <com.zenx.support.preferences.SystemSettingSwitchPreference
             android:key="doze_trigger_doubletap"
             android:defaultValue="false"
             android:title="@string/doze_double_tap_title"
@@ -101,6 +103,25 @@
             android:title="@string/proximity_screen_wake_title"
             android:summary="@string/proximity_screen_wake_summary" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="brightness"
+        android:title="@string/brightness_title" >
+
+        <com.zenx.support.preferences.SystemSettingSeekBarPreference
+            android:key="ambient_doze_brightness"
+            android:title="@string/ambient_doze_brightness_title"
+            android:max="255"
+            settings:min="1"
+            android:persistent="false" />
+
+        <com.zenx.support.preferences.SystemSettingSeekBarPreference
+            android:key="ambient_pulse_brightness"
+            android:title="@string/ambient_pulse_brightness_title"
+            android:max="255"
+            settings:min="1"
+            android:persistent="false" />
     </PreferenceCategory>
 </PreferenceScreen>
 

@@ -12,7 +12,8 @@ LOCAL_PRIVILEGED_MODULE := false
 LOCAL_PRIVATE_PLATFORM_APIS := true
 
 LOCAL_STATIC_ANDROID_LIBRARIES := \
-    airbnb-lottie
+    airbnb-lottie \
+    VendorSupport-preference
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
     airbnb-lottie

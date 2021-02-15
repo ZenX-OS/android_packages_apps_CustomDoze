@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
+    <uses-permission android:name="android.permission.BIND_DREAM_SERVICE" />
 
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
@@ -31,6 +32,7 @@
         <activity
             android:name=".DozeSettings"
             android:label="@string/ambient_display_title"
+            android:permission="android.permission.BIND_DREAM_SERVICE"
             android:theme="@style/AppTheme">
         </activity>
     </application>

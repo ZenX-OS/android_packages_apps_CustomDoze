@@ -28,8 +28,8 @@ import androidx.preference.SwitchPreference;
 import androidx.preference.PreferenceFragment;
 import android.view.MenuItem;
 
-import com.zenx.support.preferences.SystemSettingSeekBarPreference;
-import com.zenx.support.preferences.SystemSettingSwitchPreference;
+import com.zeus.support.preferences.SystemSettingSeekBarPreference;
+import com.zeus.support.preferences.SystemSettingSwitchPreference;
 
 public class DozeSettings extends PreferenceActivity implements PreferenceFragment.OnPreferenceStartFragmentCallback {
 
